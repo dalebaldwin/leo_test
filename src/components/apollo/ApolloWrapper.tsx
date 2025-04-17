@@ -18,6 +18,8 @@ function makeClient() {
   })
 }
 
+// Next 14 docs are a bit limited on setting this up, found some instructions on github to handle the updated SSR/ RSC behaviour
+
 // you need to create a component to wrap your app in
 export function ApolloWrapper({ children }: React.PropsWithChildren) {
   return <ApolloNextAppProvider makeClient={makeClient}>{children}</ApolloNextAppProvider>

@@ -10,7 +10,8 @@ type Props = {
 export const Gate = ({ SignIn, Content }: Props) => {
   const { activeUser } = useUserData()
 
-  // not how I want to do this generally and yuk but works for a small test
+  // Not how I want to do this generally and yuk but works for a small test
+  // This just stops the flash
   if (activeUser === undefined) {
     return <></>
   }

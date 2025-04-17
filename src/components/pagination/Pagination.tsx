@@ -11,6 +11,9 @@ type PaginationListProps = {
 export const PaginationList = ({ currentPage, total, perPage }: PaginationListProps) => {
   const router = useRouter()
 
+  // the gql source data seems to be contantly being updated so the total count
+  // will likely be wrong and continue to grow as you go through the data.
+
   return (
     <Pagination.Root
       count={total}

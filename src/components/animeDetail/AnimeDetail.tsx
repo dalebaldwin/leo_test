@@ -44,11 +44,14 @@ export const AnimeDetail = ({ pageId, animeId }: { pageId?: number; animeId: num
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
+  // I prefer co-locating data fetch as close as I can to the render of the element.
+  // I could in theory have passed all this down via props.
+  // I've had issues with larger apps with this approach though as any change to the data
+  // results in big re-render cycles.
+  // Rendering list and then having the child detail element like this handle it's own data adds a nice bit of separation
   const { loading, error, data } = useGetAnimeTitleQuery({ variables: { id: animeId } })
 
   const onCloseUrl = pageId && pageId !== 1 ? `/${pageId}` : `/`
-
-  console.log(animeId)
 
   useEffect(() => {
     if (animeId && !loading && !error && data) {
@@ -73,7 +76,7 @@ export const AnimeDetail = ({ pageId, animeId }: { pageId?: number; animeId: num
             {animeData && (
               <>
                 <Flex direction="column" justifyContent="center" alignItems="center">
-                  {animeData.coverImage?.large && (
+                  {animeData.coverImage?.extraLarge && (
                     <Box mt={8}>
                       <Image
                         src={animeData.coverImage?.extraLarge}
