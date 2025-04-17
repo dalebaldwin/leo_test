@@ -3,7 +3,9 @@ import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import { Provider } from '@/components/ui/provider'
 
-const jakarta = Plus_Jakarta_Sans({})
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
