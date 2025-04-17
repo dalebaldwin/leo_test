@@ -7,13 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier": "pnpm exec prettier . --check"
+    "prettier": "pnpm exec prettier . --check",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.7",
+    "@apollo/client-integration-nextjs": "^0.12.1",
     "@chakra-ui/react": "^3.16.0",
     "@emotion/react": "^11.14.0",
     "dexie": "^4.0.11",
     "dexie-react-hooks": "^1.1.7",
+    "graphql": "^16.10.0",
     "nanoid": "^5.1.5",
     "next": "15.3.0",
     "next-themes": "^0.4.6",
@@ -23,6 +27,12 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@graphql-codegen/cli": "5.0.5",
+    "@graphql-codegen/client-preset": "4.8.0",
+    "@graphql-codegen/introspection": "4.0.3",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-operations": "^4.6.0",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

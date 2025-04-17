@@ -1,5 +1,6 @@
-import { Container, Text, Box } from '@chakra-ui/react'
+import { Container, Text, Separator } from '@chakra-ui/react'
 import { useUserData } from '@/hooks/useUserData'
+import { AnimeList } from '../animeList/AnimeList'
 
 export const Content = () => {
   const { activeUser } = useUserData()
@@ -9,11 +10,13 @@ export const Content = () => {
       <Text as="h1" textStyle="3xl">
         Content
       </Text>
+      <Separator my={8} />
       <Text>
         Hi {activeUser?.userName}, who is a {activeUser?.jobTitle}. You might be interested in the
         following content items.
       </Text>
-      <Box></Box>
+      <Separator my={8} />
+      <AnimeList />
     </Container>
   )
 }
