@@ -1,9 +1,13 @@
 import { Container, Text, Separator } from '@chakra-ui/react'
 import { useUserData } from '@/hooks/useUserData'
-import { AnimeList } from '../animeList/AnimeList'
+import { AnimeList } from '@/components/animeList/AnimeList'
+import { AnimeDetail } from '@/components/animeDetail/AnimeDetail'
+import { useSearchParams } from 'next/navigation'
 
-export const Content = () => {
+export const Content = ({ pageId }: { pageId?: number }) => {
   const { activeUser } = useUserData()
+  const searchParams = useSearchParams()
+  const animeId = searchParams.get('anime')
 
   return (
     <Container>
@@ -16,7 +20,8 @@ export const Content = () => {
         following content items.
       </Text>
       <Separator my={8} />
-      <AnimeList />
+      <AnimeList page={pageId || 1} />
+      <AnimeDetail animeId={Number(animeId)} pageId={pageId} />
     </Container>
   )
 }

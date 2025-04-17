@@ -1,14 +1,23 @@
 import { ButtonGroup, IconButton, Pagination } from '@chakra-ui/react'
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
+import { useRouter } from 'next/navigation'
 
 type PaginationListProps = {
-  page: number
-  lastPage: number
+  currentPage: number
+  total: number
+  perPage: number
 }
 
-export const PaginationList = ({ page, lastPage }: PaginationListProps) => {
+export const PaginationList = ({ currentPage, total, perPage }: PaginationListProps) => {
+  const router = useRouter()
+
   return (
-    <Pagination.Root count={20} pageSize={2} defaultPage={1}>
+    <Pagination.Root
+      count={total}
+      pageSize={perPage}
+      page={currentPage}
+      onPageChange={(details) => router.push(`/${details.page}`)}
+    >
       <ButtonGroup variant="ghost" size="sm">
         <Pagination.PrevTrigger asChild>
           <IconButton>

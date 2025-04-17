@@ -13,12 +13,11 @@ export default function UserId({ params }: { params: Promise<{ userId: string }>
   const [enableEdit, setEnableEdit] = useState<boolean>(false)
 
   const { editUser, activeUser } = useUserData()
+
   const canEdit = activeUser?.userId === userId
 
   // Effect to set init data
   useEffect(() => {
-    console.log(!enableEdit, activeUser)
-
     if (!enableEdit && activeUser) {
       setUserName(activeUser?.userName || '')
       setJobTitle(activeUser?.jobTitle || '')

@@ -1,13 +1,8 @@
-# codegen.yml
-schema: https://graphql.anilist.co
-documents: 'src/**/*.{ts,tsx}'
+schema: https://graphql.anilist.co # Replace with your GraphQL schema endpoint
+documents: src/**/*.tsx # Where your queries are defined
 generates:
-  ./src/graphql/generated.ts:
+  ./src/generated.ts: # Output file for generated types
     plugins:
       - typescript
       - typescript-operations
       - typescript-react-apollo
-    config:
-      withHooks: true
-      withHOC: false
-      withComponent: false

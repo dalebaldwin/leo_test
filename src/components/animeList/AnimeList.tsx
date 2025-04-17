@@ -2,22 +2,19 @@ import { gql } from '@apollo/client'
 import { Box, Flex, Text, Spinner, Grid, GridItem } from '@chakra-ui/react'
 import { AnimeCard } from '../animeCard/AnimeCard'
 import { PaginationList } from '@/components/pagination/Pagination'
-import { useQuery } from '@/graphql/generated'
+import { useGetAnimeListQuery } from '@/generated'
 
 export const GET_ANIME_LIST = gql`
-  query ($page: Int, $perPage: Int) {
+  query GetAnimeList($page: Int, $perPage: Int) {
     Page(page: $page, perPage: $perPage) {
       pageInfo {
         total
         currentPage
-        lastPage
-        hasNextPage
         perPage
       }
       media(type: ANIME, sort: POPULARITY) {
         id
         title {
-          romaji
           english
           native
         }
@@ -26,20 +23,22 @@ export const GET_ANIME_LIST = gql`
           color
         }
         description
-        episodes
-        averageScore
-        genres
       }
     }
   }
 `
 
 export const AnimeList = ({ page }: { page: number }) => {
-  const { loading, error, data } = useQuery(GET_ANIME_LIST, {
+  const perPage = 30
+  // The hardset value can get moved to a config later, might be fun to put it in the user object
+  // could be a setting available to a user
+
+  const { loading, error, data } = useGetAnimeListQuery({
     variables: {
-      page: page || 1,
-      perPage: 30,
+      page,
+      perPage,
     },
+    fetchPolicy: 'no-cache',
   })
 
   if (loading) {
@@ -69,15 +68,21 @@ export const AnimeList = ({ page }: { page: number }) => {
           data.Page!.media.map((i) => (
             <GridItem key={i?.id} colSpan={1}>
               <AnimeCard
+                animeId={i?.id || 0}
                 title={i?.title?.native || ''}
                 description={i?.description || ''}
                 image={i?.coverImage?.medium || ''}
+                page={page}
               />
             </GridItem>
           ))}
       </Grid>
       <Flex justify="center" mt={8} mb={20}>
-        <PaginationList page={page} lastPage={data?.Page?.pageInfo?.lastPage || 0} />
+        <PaginationList
+          currentPage={page}
+          total={data?.Page?.pageInfo?.total || 0}
+          perPage={perPage}
+        />
       </Flex>
     </Flex>
   )

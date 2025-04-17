@@ -9,9 +9,17 @@ type AddUser = Pick<User, 'userName' | 'jobTitle'>
 type EditUser = Pick<User, 'userName' | 'jobTitle' | 'userId'>
 
 export const useUserData = () => {
+  // data = user
+  // undefined = loading
+  // null = no user
+  // aware this sucks, but this is meant to be a short exercise
   const activeUser = useLiveQuery(async () => {
     const user = await db.users.where('status').equals('active').toArray()
-    return user[0]
+    if (user[0]) {
+      return user[0]
+    } else {
+      return null
+    }
   })
 
   const addUser = ({ userName, jobTitle }: AddUser) => {
@@ -33,7 +41,7 @@ export const useUserData = () => {
 
   // Check if active user then edit value
   const editUser = ({ userName, jobTitle, userId }: EditUser) => {
-    if (activeUser?.userId === userId) {
+    if (activeUser !== null && activeUser?.userId === userId) {
       db.users.where('userId').equals(userId).modify({ userName, jobTitle })
     }
   }

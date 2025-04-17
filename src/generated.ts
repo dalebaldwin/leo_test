@@ -4673,29 +4673,100 @@ export type YearStats = {
   year?: Maybe<Scalars['Int']['output']>;
 };
 
-export type Unnamed_1_QueryVariables = Exact<{
+export type GetAnimeTitleQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetAnimeTitleQuery = { __typename?: 'Query', Media?: { __typename?: 'Media', id: number, duration?: number | null, description?: string | null, episodes?: number | null, isAdult?: boolean | null, countryOfOrigin?: any | null, volumes?: number | null, title?: { __typename?: 'MediaTitle', romaji?: string | null, english?: string | null, native?: string | null } | null, startDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, endDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null, large?: string | null, medium?: string | null, color?: string | null } | null } | null };
+
+export type GetAnimeListQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   perPage?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type Unnamed_1_Query = { __typename?: 'Query', Page?: { __typename?: 'Page', pageInfo?: { __typename?: 'PageInfo', total?: number | null, currentPage?: number | null, lastPage?: number | null, hasNextPage?: boolean | null, perPage?: number | null } | null, media?: Array<{ __typename?: 'Media', id: number, description?: string | null, episodes?: number | null, averageScore?: number | null, genres?: Array<string | null> | null, title?: { __typename?: 'MediaTitle', romaji?: string | null, english?: string | null, native?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', medium?: string | null, color?: string | null } | null } | null> | null } | null };
+export type GetAnimeListQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', pageInfo?: { __typename?: 'PageInfo', total?: number | null, currentPage?: number | null, perPage?: number | null } | null, media?: Array<{ __typename?: 'Media', id: number, description?: string | null, title?: { __typename?: 'MediaTitle', english?: string | null, native?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', medium?: string | null, color?: string | null } | null } | null> | null } | null };
 
 
-export const Document = gql`
-    query ($page: Int, $perPage: Int) {
+export const GetAnimeTitleDocument = gql`
+    query GetAnimeTitle($id: Int) {
+  Media(id: $id, type: ANIME) {
+    id
+    title {
+      romaji
+      english
+      native
+    }
+    duration
+    description
+    episodes
+    startDate {
+      year
+      month
+      day
+    }
+    endDate {
+      year
+      month
+      day
+    }
+    isAdult
+    coverImage {
+      extraLarge
+      large
+      medium
+      color
+    }
+    countryOfOrigin
+    volumes
+  }
+}
+    `;
+
+/**
+ * __useGetAnimeTitleQuery__
+ *
+ * To run a query within a React component, call `useGetAnimeTitleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAnimeTitleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAnimeTitleQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAnimeTitleQuery(baseOptions?: Apollo.QueryHookOptions<GetAnimeTitleQuery, GetAnimeTitleQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAnimeTitleQuery, GetAnimeTitleQueryVariables>(GetAnimeTitleDocument, options);
+      }
+export function useGetAnimeTitleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAnimeTitleQuery, GetAnimeTitleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAnimeTitleQuery, GetAnimeTitleQueryVariables>(GetAnimeTitleDocument, options);
+        }
+export function useGetAnimeTitleSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAnimeTitleQuery, GetAnimeTitleQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAnimeTitleQuery, GetAnimeTitleQueryVariables>(GetAnimeTitleDocument, options);
+        }
+export type GetAnimeTitleQueryHookResult = ReturnType<typeof useGetAnimeTitleQuery>;
+export type GetAnimeTitleLazyQueryHookResult = ReturnType<typeof useGetAnimeTitleLazyQuery>;
+export type GetAnimeTitleSuspenseQueryHookResult = ReturnType<typeof useGetAnimeTitleSuspenseQuery>;
+export type GetAnimeTitleQueryResult = Apollo.QueryResult<GetAnimeTitleQuery, GetAnimeTitleQueryVariables>;
+export const GetAnimeListDocument = gql`
+    query GetAnimeList($page: Int, $perPage: Int) {
   Page(page: $page, perPage: $perPage) {
     pageInfo {
       total
       currentPage
-      lastPage
-      hasNextPage
       perPage
     }
     media(type: ANIME, sort: POPULARITY) {
       id
       title {
-        romaji
         english
         native
       }
@@ -4704,44 +4775,41 @@ export const Document = gql`
         color
       }
       description
-      episodes
-      averageScore
-      genres
     }
   }
 }
     `;
 
 /**
- * __useQuery__
+ * __useGetAnimeListQuery__
  *
- * To run a query within a React component, call `useQuery` and pass it any options that fit your needs.
- * When your component renders, `useQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAnimeListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAnimeListQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useQuery({
+ * const { data, loading, error } = useGetAnimeListQuery({
  *   variables: {
  *      page: // value for 'page'
  *      perPage: // value for 'perPage'
  *   },
  * });
  */
-export function useQuery(baseOptions?: Apollo.QueryHookOptions<Query, QueryVariables>) {
+export function useGetAnimeListQuery(baseOptions?: Apollo.QueryHookOptions<GetAnimeListQuery, GetAnimeListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<Query, QueryVariables>(Document, options);
+        return Apollo.useQuery<GetAnimeListQuery, GetAnimeListQueryVariables>(GetAnimeListDocument, options);
       }
-export function useLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Query, QueryVariables>) {
+export function useGetAnimeListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAnimeListQuery, GetAnimeListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<Query, QueryVariables>(Document, options);
+          return Apollo.useLazyQuery<GetAnimeListQuery, GetAnimeListQueryVariables>(GetAnimeListDocument, options);
         }
-export function useSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<Query, QueryVariables>) {
+export function useGetAnimeListSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAnimeListQuery, GetAnimeListQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<Query, QueryVariables>(Document, options);
+          return Apollo.useSuspenseQuery<GetAnimeListQuery, GetAnimeListQueryVariables>(GetAnimeListDocument, options);
         }
-export type QueryHookResult = ReturnType<typeof useQuery>;
-export type LazyQueryHookResult = ReturnType<typeof useLazyQuery>;
-export type SuspenseQueryHookResult = ReturnType<typeof useSuspenseQuery>;
-export type QueryResult = Apollo.QueryResult<Query, QueryVariables>;
+export type GetAnimeListQueryHookResult = ReturnType<typeof useGetAnimeListQuery>;
+export type GetAnimeListLazyQueryHookResult = ReturnType<typeof useGetAnimeListLazyQuery>;
+export type GetAnimeListSuspenseQueryHookResult = ReturnType<typeof useGetAnimeListSuspenseQuery>;
+export type GetAnimeListQueryResult = Apollo.QueryResult<GetAnimeListQuery, GetAnimeListQueryVariables>;

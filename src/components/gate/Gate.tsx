@@ -10,7 +10,12 @@ type Props = {
 export const Gate = ({ SignIn, Content }: Props) => {
   const { activeUser } = useUserData()
 
-  if (!activeUser) {
+  // not how I want to do this generally and yuk but works for a small test
+  if (activeUser === undefined) {
+    return <></>
+  }
+
+  if (activeUser === null) {
     return <SignIn />
   }
 
