@@ -20,7 +20,7 @@ export const Content = ({ pageId }: { pageId?: number }) => {
         following content items.
       </Text>
       <Separator my={8} />
-      <AnimeList page={pageId || 1} />
+      <AnimeList pageId={pageId || 1} />
       <AnimeDetail animeId={Number(animeId)} pageId={pageId} />
     </Container>
   )

@@ -7,15 +7,15 @@ type Props = {
   title: string
   description?: string
   image: string
-  page: number
+  pageId: number
 }
 
 // I just lifted the card, it's simple but works for this use case
 // Using url structure to drigger the detail modal
 // This means you can link to an actual title
 
-export const AnimeCard = ({ animeId, title, description, image, page }: Props) => {
-  const detailBaseUrl = page !== 1 ? `/${page}?anime=${animeId}` : `/?anime=${animeId}`
+export const AnimeCard = ({ animeId, title, description, image, pageId }: Props) => {
+  const detailBaseUrl = pageId !== 1 ? `/${pageId}?anime=${animeId}` : `/?anime=${animeId}`
 
   return (
     <Card.Root h="100%">

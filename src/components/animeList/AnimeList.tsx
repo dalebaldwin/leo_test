@@ -4,6 +4,10 @@ import { AnimeCard } from '../animeCard/AnimeCard'
 import { PaginationList } from '@/components/pagination/Pagination'
 import { useGetAnimeListQuery } from '@/generated'
 
+// I bolted gql codegen in for types
+// If this were a larger app and I was using these queries in more places they would be
+// in their own folder.
+
 export const GET_ANIME_LIST = gql`
   query GetAnimeList($page: Int, $perPage: Int) {
     Page(page: $page, perPage: $perPage) {
@@ -28,14 +32,14 @@ export const GET_ANIME_LIST = gql`
   }
 `
 
-export const AnimeList = ({ page }: { page: number }) => {
+export const AnimeList = ({ pageId }: { pageId: number }) => {
   const perPage = 30
   // The hardset value can get moved to a config later, might be fun to put it in the user object
   // could be a setting available to a user
 
   const { loading, error, data } = useGetAnimeListQuery({
     variables: {
-      page,
+      pageId,
       perPage,
     },
     fetchPolicy: 'no-cache',
@@ -72,14 +76,14 @@ export const AnimeList = ({ page }: { page: number }) => {
                 title={i?.title?.native || ''}
                 description={i?.description || ''}
                 image={i?.coverImage?.medium || ''}
-                page={page}
+                pageId={pageId}
               />
             </GridItem>
           ))}
       </Grid>
       <Flex justify="center" mt={8} mb={20}>
         <PaginationList
-          currentPage={page}
+          currentPage={pageId}
           total={data?.Page?.pageInfo?.total || 0}
           perPage={perPage}
         />
