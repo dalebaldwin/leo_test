@@ -1,6 +1,6 @@
-### Leonardo.Ai Web Team Technical Challenge V3.4.1
+# Leonardo.Ai Web Team Technical Challenge V3.4.1
 
-# Completed by Dale Baldwin
+### Completed by Dale Baldwin
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
