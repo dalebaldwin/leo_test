@@ -39,7 +39,7 @@ export const AnimeList = ({ pageId }: { pageId: number }) => {
 
   const { loading, error, data } = useGetAnimeListQuery({
     variables: {
-      pageId,
+      page: pageId,
       perPage,
     },
     fetchPolicy: 'no-cache',

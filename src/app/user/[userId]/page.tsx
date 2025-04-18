@@ -2,7 +2,8 @@
 
 import { useUserData } from '@/hooks/useUserData'
 import { use, useEffect, useState } from 'react'
-import { Box, Text, Input, Field, Container, Flex } from '@chakra-ui/react'
+import { Box, Text, Input, Field, Container, Flex, Link as ChakraLink } from '@chakra-ui/react'
+import NextLink from 'next/link'
 
 export default function UserId({ params }: { params: Promise<{ userId: string }> }) {
   const { userId } = use(params)
@@ -74,8 +75,8 @@ export default function UserId({ params }: { params: Promise<{ userId: string }>
     // Can use example above however that's not as cool as real time edit to db
     <Flex justify="center">
       <Box w={{ lg: 'lg' }}>
-        <Box mb={4}>
-          <Text>Update values in fields to change in real time</Text>
+        <Box mb={16}>
+          <Text textStyle="2xl">Update values in fields to change in real time</Text>
         </Box>
         <Box mb={4}>
           <Field.Root invalid={userNameError}>
@@ -100,6 +101,11 @@ export default function UserId({ params }: { params: Promise<{ userId: string }>
             />
             <Field.ErrorText>This field is required</Field.ErrorText>
           </Field.Root>
+        </Box>
+        <Box mt="16" py="4">
+          <ChakraLink asChild fontWeight="semibold">
+            <NextLink href="/">Return to Home</NextLink>
+          </ChakraLink>
         </Box>
       </Box>
     </Flex>

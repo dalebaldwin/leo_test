@@ -2,15 +2,16 @@
 
 import { Navigation } from '@/components/navigation/Navigation'
 import { Footer } from '@/components/footer/Footer'
-import { Container } from '@chakra-ui/react'
+import { Container, Flex } from '@chakra-ui/react'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <Flex direction="column" minH="100vh">
       <Navigation />
-      <Container as="main"></Container>
-      {children}
+      <Container as="main" flex="1">
+        {children}
+      </Container>
       <Footer />
-    </>
+    </Flex>
   )
 }
