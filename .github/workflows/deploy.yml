@@ -1,0 +1,56 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main # deploy on merge to main only
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
+      - name: Code prettier check
+        run: pnpm prettier
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Deploy to Vercel
+        run: |
+          pnpm add -g vercel
+          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
