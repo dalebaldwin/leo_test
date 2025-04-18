@@ -19,18 +19,17 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: true
+      - name: Enable Corepack & Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@8 --activate
 
       - name: Code prettier check
         run: pnpm prettier
 
   deploy:
     runs-on: ubuntu-latest
-
+    needs: prettier
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -38,14 +37,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: true
+      - name: Enable Corepack & Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@8 --activate
 
       - name: Build project
         run: pnpm build
